@@ -51,3 +51,6 @@ gem 'rails_12factor', group: :production
 
 # Use Foreman to start development servers
 gem 'foreman', group: :development
+
+# Use Pry as the console
+gem 'pry-rails', group: :development
