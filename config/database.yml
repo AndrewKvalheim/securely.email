@@ -19,8 +19,9 @@ development:
   encoding: unicode
   database: howto_email_development
   pool: 5
-  username: howto_email
-  password:
+  host: localhost
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -48,8 +49,9 @@ test:
   encoding: unicode
   database: howto_email_test
   pool: 5
-  username: howto_email
-  password:
+  host: localhost
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
 
 production:
   adapter: postgresql
