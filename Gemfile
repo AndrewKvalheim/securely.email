@@ -48,3 +48,6 @@ gem 'unicorn'
 
 # Apply Heroku's recommended Rails configuration
 gem 'rails_12factor', group: :production
+
+# Use Foreman to start development servers
+gem 'foreman', group: :development
