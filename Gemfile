@@ -54,3 +54,6 @@ gem 'foreman', group: :development
 
 # Use Pry as the console
 gem 'pry-rails', group: :development
+
+# Support Haml
+gem 'haml', '~> 4.0.5'
