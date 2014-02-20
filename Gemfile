@@ -57,3 +57,16 @@ gem 'pry-rails', group: :development
 
 # Support Haml
 gem 'haml', '~> 4.0.5'
+
+# Use the RSpec test framework
+gem 'rspec-rails', '~> 2.0', group: [:development, :test]
+
+# Add shoulda-matchers assertion helpers
+gem 'shoulda-matchers', group: :test
+
+# Add Factory Girl test data helpers
+gem 'factory_girl_rails', group: [:development, :test]
+
+# Use Cucumber to write tests
+gem 'cucumber-rails', require: false, group: :test
+gem 'database_cleaner', group: :test
