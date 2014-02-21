@@ -70,3 +70,10 @@ gem 'factory_girl_rails', group: [:development, :test]
 # Use Cucumber to write tests
 gem 'cucumber-rails', require: false, group: :test
 gem 'database_cleaner', group: :test
+
+# Automated testing
+gem 'spring', group: :development
+gem 'spring-commands-rspec', group: :development
+gem 'spring-commands-cucumber', group: :development
+gem 'guard-rspec', group: [:development, :test]
+gem 'guard-cucumber', group: [:development, :test]
