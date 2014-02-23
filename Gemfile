@@ -77,3 +77,6 @@ gem 'spring-commands-rspec', group: :development
 gem 'spring-commands-cucumber', group: :development
 gem 'guard-rspec', group: [:development, :test]
 gem 'guard-cucumber', group: [:development, :test]
+
+# OpenPGP
+gem 'gpgme', '~> 2.0.2'

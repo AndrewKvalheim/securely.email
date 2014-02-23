@@ -1,10 +1,15 @@
 require 'spec_helper'
 
 describe MetaController do
-  describe "GET 'index'" do
-    it 'returns http success' do
-      get 'index'
-      response.should be_success
-    end
+  describe 'Routing' do
+    it { should route(:get, '/').to('meta#index') }
+  end
+
+  describe 'GET index' do
+    before { get 'index' }
+
+    it { should respond_with(:success) }
+    it { should render_with_layout('application') }
+    it { should render_template('index') }
   end
 end

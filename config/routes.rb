@@ -56,4 +56,7 @@ HowtoEmail::Application.routes.draw do
 
   # Home page
   root 'meta#index'
+
+  # 'How to email' pages
+  get '/:slug' => 'identities#show', format: false
 end
