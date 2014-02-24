@@ -17,3 +17,7 @@
 
 # Ignore local environment configuration.
 *.env
+
+# Vendored binaries
+/wotsap
+
