@@ -2,11 +2,11 @@ Feature: Command interface
 
   Scenario: Handle a missing command
     When I send no command
-    Then I should receive 'No command received.'
+    Then I should receive 'Unknown command: ""'
 
   Scenario: Handle a missing signature
     When I send a command with no signature
-    Then I should receive 'No command received.'
+    Then I should receive 'No signed command received.'
 
   Scenario: Require a valid signature
     When I send a command with an invalid signature

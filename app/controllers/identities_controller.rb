@@ -79,7 +79,7 @@ class IdentitiesController < ApplicationController
         end
       end
     rescue GPGME::Error::NoData
-      raise InvalidRequest, 'No command received.'
+      raise InvalidRequest, 'No signed command received.'
     end
   end
 
