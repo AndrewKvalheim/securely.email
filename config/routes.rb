@@ -59,4 +59,7 @@ HowtoEmail::Application.routes.draw do
 
   # 'How to email' pages
   get '/:slug' => 'identities#show', format: false
+
+  # Command interface
+  post '/:slug' => 'identities#update', format: false
 end
