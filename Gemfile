@@ -80,3 +80,6 @@ gem 'guard-cucumber', group: [:development, :test]
 
 # OpenPGP
 gem 'gpgme', '~> 2.0.2'
+
+# Interactive debugging
+gem 'pry', group: [:development]
