@@ -8,7 +8,7 @@ Install system dependencies:
 
  - Heroku Toolbelt
  - PostgreSQL
- - Ruby 2.1.0
+ - Ruby 2.1.1
 
 and install gems:
 
