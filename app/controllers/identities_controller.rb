@@ -1,3 +1,5 @@
+require 'signed_message'
+
 class IdentitiesController < ApplicationController
   class InvalidRequest < NoMethodError; end
   class RequestDenied  < NoMethodError; end
@@ -69,17 +71,14 @@ class IdentitiesController < ApplicationController
   end
 
   def signed_command(message)
-    begin
-      command = GPGME::Data.new
-      GPGME::Crypto.verify(message, output: command) do |signature|
-        if signature.valid?
-          return [command.to_s.chomp.downcase, signature.key.fingerprint]
-        else
-          raise InvalidRequest, 'Invalid signature.'
-        end
-      end
-    rescue GPGME::Error::NoData
-      raise InvalidRequest, 'No signed command received.'
+    signed_message = SignedMessage.new(message)
+
+    if signed_message.valid?
+      command = signed_message.body.to_s.chomp.downcase
+
+      return [command, signed_message.fingerprint]
+    else
+      raise InvalidRequest, 'Invalid signature.'
     end
   end
 

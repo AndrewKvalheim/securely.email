@@ -6,7 +6,7 @@ Feature: Command interface
 
   Scenario: Handle a missing signature
     When I send a command with no signature
-    Then I should receive 'No signed command received.'
+    Then I should receive 'Invalid signature.'
 
   Scenario: Require a valid signature
     When I send a command with an invalid signature
