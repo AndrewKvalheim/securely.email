@@ -1,6 +1,10 @@
 require 'signed_message'
+require 'shellwords'
 
 class IdentitiesController < ApplicationController
+  REFERENCE = 'B80C4E1E6F5544B277518173535B253E3B5AB9C6'
+  WOTSAP = Shellwords.escape(Rails.root.join('wotsap').to_s)
+
   class InvalidRequest < NoMethodError; end
   class RequestDenied  < NoMethodError; end
 
@@ -39,6 +43,15 @@ class IdentitiesController < ApplicationController
 
   private
 
+  def connected_to?(fingerprint)
+    Rails.cache.fetch("/wot/#{ fingerprint }", expires_in: 1.day) do
+      from = Shellwords.escape(REFERENCE[-8..-1])
+      to   = Shellwords.escape(fingerprint[-8..-1])
+
+      system("#{ WOTSAP } #{ from } #{ to }", err: File::NULL, out: File::NULL)
+    end
+  end
+
   def request_disable(slug, fingerprint)
     identity = Identity.find_by_slug(slug)
 
@@ -55,18 +68,22 @@ class IdentitiesController < ApplicationController
   end
 
   def request_enable(slug, fingerprint)
-    identity = Identity.new(slug: slug, fingerprint: fingerprint)
+    if connected_to?(fingerprint)
+      identity = Identity.new(slug: slug, fingerprint: fingerprint)
 
-    if identity.save
-      reply "Enabled alias: #{slug}", status: :created
-    else
-      if identity.errors[:slug].include?('has already been taken')
-        raise RequestDenied, 'Already enabled.'
-      elsif identity.errors[:fingerprint].include?('has already been taken')
-        raise RequestDenied, 'You may only enable one alias.'
+      if identity.save
+        reply "Enabled alias: #{slug}", status: :created
       else
-        raise RequestDenied, 'Permission denied.'
+        if identity.errors[:slug].include?('has already been taken')
+          raise RequestDenied, 'Already enabled.'
+        elsif identity.errors[:fingerprint].include?('has already been taken')
+          raise RequestDenied, 'You may only enable one alias.'
+        else
+          raise RequestDenied, 'Permission denied.'
+        end
       end
+    else
+      raise RequestDenied, 'Sorry, this key is not yet trusted.'
     end
   end
 
