@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'web_examples'
 
 describe IdentitiesController do
   before do
@@ -13,6 +14,7 @@ describe IdentitiesController do
     before { get 'show', slug: 'AndrewKvalheim' }
 
     it { should respond_with(:success) }
+    it { should be_cacheable }
     it { should render_with_layout('application') }
     it { should render_template('show') }
   end

@@ -39,6 +39,8 @@ class IdentitiesController < ApplicationController
     slug = params[:slug]
 
     @identity = Identity.find_by_slug!(slug)
+
+    expires_in 1.year, public: true
   end
 
   private
