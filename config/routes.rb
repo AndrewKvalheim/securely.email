@@ -56,6 +56,7 @@ HowtoEmail::Application.routes.draw do
 
   # Home page
   root 'meta#index'
+  get '/you', to: redirect('/')
 
   # 'How to email' pages
   get '/:slug' => 'identities#show', format: false
