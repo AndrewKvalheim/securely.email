@@ -83,3 +83,7 @@ gem 'gpgme', '~> 2.0.2'
 
 # Interactive debugging
 gem 'pry', group: [:development]
+
+# Use the Compass framework to author stylesheets
+gem 'compass-rails'
+gem 'compass-flexbox'

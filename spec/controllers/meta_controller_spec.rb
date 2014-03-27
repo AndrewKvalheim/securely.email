@@ -11,7 +11,7 @@ describe MetaController do
 
     it { should respond_with(:success) }
     it { should be_cacheable }
-    it { should render_with_layout('application') }
+    it { should render_with_layout('landing') }
     it { should render_template('index') }
   end
 end
