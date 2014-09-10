@@ -9,6 +9,7 @@ Install system dependencies:
  - Heroku Toolbelt
  - PostgreSQL
  - Ruby 2.1.2
+ - libpq-dev
 
 and install gems:
 
