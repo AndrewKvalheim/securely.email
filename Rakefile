@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-HowtoEmail::Application.load_tasks
+SecurelyEmail::Application.load_tasks

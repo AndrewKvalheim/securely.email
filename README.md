@@ -1,4 +1,4 @@
-# howto.email
+# securely.email
 
 ## Installation
 
@@ -22,7 +22,7 @@ bundle install
 Add the deployment remote:
 
 ```bash
-heroku git:remote -a howto-email
+heroku git:remote -a securely-email
 ```
 
 ### Database configuration

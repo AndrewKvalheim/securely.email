@@ -17,7 +17,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: howto_email_development
+  database: securely_email_development
   pool: 5
   host: localhost
   username: <%= ENV['DB_USERNAME'] %>
@@ -47,7 +47,7 @@ development:
 test: &test
   adapter: postgresql
   encoding: unicode
-  database: howto_email_test
+  database: securely_email_test
   pool: 5
   host: localhost
   username: <%= ENV['DB_USERNAME'] %>
@@ -56,9 +56,9 @@ test: &test
 production:
   adapter: postgresql
   encoding: unicode
-  database: howto_email_production
+  database: securely_email_production
   pool: 5
-  username: howto_email
+  username: securely_email
   password:
 
 cucumber:
