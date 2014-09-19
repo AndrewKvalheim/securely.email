@@ -1,3 +1,1 @@
-unless Rails.env.production?
-  Rails.cache.clear
-end
+Rails.cache.clear unless Rails.env.production?

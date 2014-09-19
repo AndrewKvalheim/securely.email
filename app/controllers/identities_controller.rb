@@ -1,9 +1,9 @@
 require 'signed_message'
-require 'shellwords'
 
+# Handles user-contributed content
 class IdentitiesController < ApplicationController
   REFERENCE = 'B80C4E1E6F5544B277518173535B253E3B5AB9C6'
-  WOTSAP = Shellwords.escape(Rails.root.join('wotsap').to_s)
+  WOTSAP = Rails.root.join('wotsap').to_s
 
   class InvalidRequest < NoMethodError; end
   class RequestDenied  < NoMethodError; end
@@ -18,9 +18,9 @@ class IdentitiesController < ApplicationController
 
   def update
     message = case params[:command]
-    when ActionDispatch::Http::UploadedFile then params[:command].read
-    when String then params[:command]
-    end
+              when ActionDispatch::Http::UploadedFile then params[:command].read
+              when String then params[:command]
+              end
     slug = params[:slug]
 
     command, fingerprint = signed_command(message)
@@ -31,7 +31,7 @@ class IdentitiesController < ApplicationController
     when 'enable'
       request_enable(slug, fingerprint)
     else
-      raise InvalidRequest, "Unknown command: #{ command.inspect }"
+      fail InvalidRequest, "Unknown command: #{ command.inspect }"
     end
   end
 
@@ -47,10 +47,10 @@ class IdentitiesController < ApplicationController
 
   def connected_to?(fingerprint)
     Rails.cache.fetch("/wot/#{ fingerprint }", expires_in: 1.day) do
-      from = Shellwords.escape(REFERENCE[-8..-1])
-      to   = Shellwords.escape(fingerprint[-8..-1])
+      from = REFERENCE[-8..-1]
+      to   = fingerprint[-8..-1]
 
-      system("#{ WOTSAP } #{ from } #{ to }", err: File::NULL, out: File::NULL)
+      system(WOTSAP, from, to, err: File::NULL, out: File::NULL)
     end
   end
 
@@ -62,10 +62,10 @@ class IdentitiesController < ApplicationController
         identity.destroy
         reply "Disabled alias: #{slug}", status: :ok
       else
-        raise RequestDenied, 'Permission denied.'
+        fail RequestDenied, 'Permission denied.'
       end
     else
-      raise RequestDenied, 'Not enabled.'
+      fail RequestDenied, 'Not enabled.'
     end
   end
 
@@ -77,15 +77,15 @@ class IdentitiesController < ApplicationController
         reply "Enabled alias: #{slug}", status: :created
       else
         if identity.errors[:slug].include?('has already been taken')
-          raise RequestDenied, 'Already enabled.'
+          fail RequestDenied, 'Already enabled.'
         elsif identity.errors[:fingerprint].include?('has already been taken')
-          raise RequestDenied, 'You may only enable one alias.'
+          fail RequestDenied, 'You may only enable one alias.'
         else
-          raise RequestDenied, 'Permission denied.'
+          fail RequestDenied, 'Permission denied.'
         end
       end
     else
-      raise RequestDenied, 'Sorry, this key is not yet trusted.'
+      fail RequestDenied, 'Sorry, this key is not yet trusted.'
     end
   end
 
@@ -97,7 +97,7 @@ class IdentitiesController < ApplicationController
 
       return [command, signed_message.fingerprint]
     else
-      raise InvalidRequest, 'Invalid signature.'
+      fail InvalidRequest, 'Invalid signature.'
     end
   end
 

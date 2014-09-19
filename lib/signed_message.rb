@@ -1,47 +1,38 @@
-require 'shellwords'
-
+# GPG-signed message
 class SignedMessage
   attr_reader :body, :fingerprint
 
-  class MissingKey < StandardError; end
-
   def initialize(data)
-    unpack(data)
+    @body, @fingerprint, @valid = unpack(data)
   end
 
-  def valid?
+  def valid? # rubocop:disable Style/TrivialAccessors
     @valid
   end
 
   private
 
-  def unpack(data)
-    output = GPGME::Data.new
-    signature = nil
+  def receive(fingerprint)
+    system ['gpg', '--recv-keys', fingerprint]
+  end
+
+  def unpack(data, auto_receive = true)
+    message = GPGME::Data.new
 
     begin
-      GPGME::Crypto.verify(data, output: output) do |first_try|
-        if first_try.no_key?
-          system "gpg --recv-keys #{Shellwords.escape(first_try.fingerprint)}"
+      GPGME::Crypto.verify(data, output: message) do |signature|
+        parts = if auto_receive && signature.no_key?
+                  receive signature.fingerprint
 
-          GPGME::Crypto.verify(data, output: output) do |second_try|
-            if second_try.no_key?
-              raise MissingKey
-            else
-              signature = second_try
-            end
-          end
-        else
-          signature = first_try
-        end
+                  unpack(data, false)
+                else
+                  [message.to_s, signature.key.fingerprint, signature.valid?]
+                end
+
+        return parts
       end
     rescue GPGME::Error::NoData
-    end
-
-    if signature
-      @body        = output.to_s
-      @fingerprint = signature.key.fingerprint
-      @valid       = signature.valid?
+      return [nil, nil, false]
     end
   end
 end

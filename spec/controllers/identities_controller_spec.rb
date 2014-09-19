@@ -7,7 +7,8 @@ describe IdentitiesController do
   end
 
   describe 'Routing' do
-    it { should route(:get, '/AndrewKvalheim').to('identities#show', slug: 'AndrewKvalheim') }
+    slug = 'AndrewKvalheim'
+    it { should route(:get, "/#{slug}").to('identities#show', slug: slug) }
   end
 
   describe 'GET show' do

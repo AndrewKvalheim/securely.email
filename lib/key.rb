@@ -5,7 +5,7 @@ class Key
   def initialize(fingerprint)
     @fingerprint = fingerprint
 
-    get_key.try(:tap) do |key|
+    lookup(fingerprint).try(:tap) do |key|
       @comment = key.primary_uid.comment
       @email   = key.primary_uid.email
       @exists  = true
@@ -13,20 +13,17 @@ class Key
     end
   end
 
-  def exists?
+  def exists? # rubocop:disable Style/TrivialAccessors
     @exists
   end
 
   private
 
-  def get_key
-    # GPGME raises EOFError when no results are found.
-    begin
-      GPGME::Ctx.new(keylist_mode: GPGME::KEYLIST_MODE_EXTERN) do |context|
-        context.get_key("0x#{ @fingerprint }")
-      end
-    rescue EOFError
-      nil
+  def lookup(fingerprint)
+    GPGME::Ctx.new(keylist_mode: GPGME::KEYLIST_MODE_EXTERN) do |context|
+      context.get_key("0x#{ fingerprint }")
     end
+  rescue EOFError # No results found
+    nil
   end
 end

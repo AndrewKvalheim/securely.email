@@ -1,7 +1,8 @@
 require 'key'
 
+# Identity of a person, corresponding to one OpenGPG key
 class Identity < ActiveRecord::Base
-  validates :slug,        format:     { with: /\A[-.\w\d]+\z/ },
+  validates :slug,        format:     { with: /\A[-.\w]+\z/ },
                           length:     { maximum: 64 },
                           presence:   true,
                           uniqueness: true
@@ -23,10 +24,10 @@ class Identity < ActiveRecord::Base
 
   def key_existence
     error = if errors.blank?
-      'must exist on the key server' unless key.exists?
-    else
-      'was not checked against the key server'
-    end
+              'must exist on the key server' unless key.exists?
+            else
+              'was not checked against the key server'
+            end
 
     errors.add(:fingerprint, error) if error
   end
