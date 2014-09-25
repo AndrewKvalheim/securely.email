@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.1.2'
+ruby '2.1.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.3'
@@ -57,6 +57,7 @@ gem 'haml', '~> 4.0.5'
 
 # Use the RSpec test framework
 gem 'rspec-rails', '~> 2.0', group: [:development, :test]
+gem 'rspec-its', group: [:development, :test]
 
 # Add shoulda-matchers assertion helpers
 gem 'shoulda-matchers', group: :test

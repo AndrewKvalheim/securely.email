@@ -28,19 +28,19 @@ describe IdentitiesController do
     let(:reference)   { 'B80C4E1E6F5544B277518173535B253E3B5AB9C6' }
 
     it 'detects connection to a connected key' do
-      expect(controller.send(:'connected_to?', connected)).to be_true
+      expect(controller.send(:'connected_to?', connected)).to be_truthy
     end
 
     it 'detects connection to a key that has a collision' do
-      expect(controller.send(:'connected_to?', collision)).to be_true
+      expect(controller.send(:'connected_to?', collision)).to be_truthy
     end
 
     it 'detects connection to itself' do
-      expect(controller.send(:'connected_to?', reference)).to be_true
+      expect(controller.send(:'connected_to?', reference)).to be_truthy
     end
 
     it 'does not detect connection to a nonexistent key' do
-      expect(controller.send(:'connected_to?', nonexistent)).to be_false
+      expect(controller.send(:'connected_to?', nonexistent)).to be_falsey
     end
   end
 end
