@@ -21,3 +21,5 @@
 # Vendored binaries
 /wotsap
 
+# GPG
+.gnupg/random_seed

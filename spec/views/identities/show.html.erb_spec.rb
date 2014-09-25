@@ -8,8 +8,8 @@ describe 'identities/show.html.haml' do
 
   subject { rendered }
 
-  it { should have_content('Andrew Kvalheim') }
-  it { should have_content('Andrew@Kvalhe.im') }
-  it { should have_content('http://Andrew.Kvalhe.im/') }
-  it { should have_content('B80C4E1E6F5544B277518173535B253E3B5AB9C6') }
+  it { should have_content('Example') }
+  it { should have_content('Example') }
+  it { should have_content('example@example.com') }
+  it { should have_content('81A46DCA7018FABFC72BB787253A0338239BC6E9') }
 end

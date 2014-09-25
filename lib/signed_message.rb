@@ -13,7 +13,7 @@ class SignedMessage
   private
 
   def receive(fingerprint)
-    system ['gpg', '--recv-keys', fingerprint]
+    system(GPG_ENV, 'gpg', '--recv-keys', fingerprint)
   end
 
   def unpack(data, auto_receive = true)

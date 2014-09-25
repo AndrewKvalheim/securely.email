@@ -20,10 +20,16 @@ class Key
   private
 
   def lookup(fingerprint)
-    GPGME::Ctx.new(keylist_mode: GPGME::KEYLIST_MODE_EXTERN) do |context|
+    GPGME::Ctx.new(keylist_mode: GPGME::KEYLIST_MODE_LOCAL) do |context|
       context.get_key("0x#{ fingerprint }")
     end
-  rescue EOFError # No results found
-    nil
+  rescue EOFError # No local results found
+    begin
+      GPGME::Ctx.new(keylist_mode: GPGME::KEYLIST_MODE_EXTERN) do |context|
+        context.get_key("0x#{ fingerprint }")
+      end
+    rescue EOFError # No external results found
+      nil
+    end
   end
 end

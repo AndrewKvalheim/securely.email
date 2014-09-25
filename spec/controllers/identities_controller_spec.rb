@@ -7,12 +7,12 @@ describe IdentitiesController do
   end
 
   describe 'Routing' do
-    slug = 'AndrewKvalheim'
+    slug = 'Example'
     it { should route(:get, "/#{slug}").to('identities#show', slug: slug) }
   end
 
   describe 'GET show' do
-    before { get 'show', slug: 'AndrewKvalheim' }
+    before { get 'show', slug: 'Example' }
 
     it { should respond_with(:success) }
     it { should be_cacheable }

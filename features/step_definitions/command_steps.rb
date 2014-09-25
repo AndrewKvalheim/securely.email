@@ -1,5 +1,3 @@
-require 'shellwords'
-
 When 'I send no command' do
   step "I send the command '' to 'TestAlias'"
 end
@@ -9,8 +7,7 @@ When 'I send a command with no signature' do
 end
 
 When 'I send a command with an invalid signature' do
-  message = `echo enable | gpg --batch -o - --clearsign -`
-  post '/TestAlias', command: message.sub('enable', 'disable')
+  post '/TestAlias', command: clearsign('enable').sub('enable', 'disable')
 end
 
 When %r{^I send the command '([^']*)'$} do |command|
@@ -18,9 +15,7 @@ When %r{^I send the command '([^']*)'$} do |command|
 end
 
 When %r{^I send the command '([^']*)' to '([^'/]*)'$} do |command, slug|
-  message = `echo #{ Shellwords.escape(command) } |
-             gpg --batch -o - --clearsign -`
-  post "/#{ slug }", command: message
+  post "/#{ slug }", command: clearsign(command)
 end
 
 Given %r{^the alias '([^']*)' is enabled$} do |slug|

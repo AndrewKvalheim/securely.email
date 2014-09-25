@@ -24,11 +24,11 @@ describe Identity do
       subject(:identity) { FactoryGirl.build(:identity) }
 
       it { should be_valid }
-      its(:'key.name')        { should eq('Andrew Kvalheim') }
-      its(:'key.comment')     { should eq('http://Andrew.Kvalhe.im/') }
-      its(:'key.email')       { should eq('Andrew@Kvalhe.im') }
+      its(:'key.name')        { should eq('Example') }
+      its(:'key.comment')     { should eq('Example') }
+      its(:'key.email')       { should eq('example@example.com') }
       its(:'key.fingerprint') do
-        should eq('B80C4E1E6F5544B277518173535B253E3B5AB9C6')
+        should eq('81A46DCA7018FABFC72BB787253A0338239BC6E9')
       end
     end
 
