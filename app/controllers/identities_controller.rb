@@ -2,9 +2,6 @@ require 'signed_message'
 
 # Handles user-contributed content
 class IdentitiesController < ApplicationController
-  REFERENCE = 'B80C4E1E6F5544B277518173535B253E3B5AB9C6'
-  WOTSAP = Rails.root.join('wotsap').to_s
-
   class InvalidRequest < NoMethodError; end
   class RequestDenied  < NoMethodError; end
 
@@ -45,15 +42,6 @@ class IdentitiesController < ApplicationController
 
   private
 
-  def connected_to?(fingerprint)
-    Rails.cache.fetch("/wot/#{ fingerprint }", expires_in: 1.day) do
-      from = REFERENCE[-8..-1]
-      to   = fingerprint[-8..-1]
-
-      system(WOTSAP, from, to, err: File::NULL, out: File::NULL)
-    end
-  end
-
   def request_disable(slug, fingerprint)
     identity = Identity.find_by_slug(slug)
 
@@ -70,9 +58,9 @@ class IdentitiesController < ApplicationController
   end
 
   def request_enable(slug, fingerprint)
-    if connected_to?(fingerprint)
-      identity = Identity.new(slug: slug, fingerprint: fingerprint)
+    identity = Identity.new(slug: slug, fingerprint: fingerprint)
 
+    if Trust.call(identity)
       if identity.save
         reply "Enabled alias: #{slug}", status: :created
       else
