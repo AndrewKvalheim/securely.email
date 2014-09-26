@@ -12,6 +12,10 @@ Feature: Command interface
     When I send a command with an invalid signature
     Then I should receive 'Invalid signature.'
 
+  Scenario: Require a unconnected key
+    When I send a command with an unconnected key
+    Then I should receive 'Untrusted key.'
+
   Scenario: Handle an unknown command
     When I send the command 'xxxxxxxx'
     Then I should receive 'Unknown command: "xxxxxxxx"'

@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Trust do
   let(:connected)   { FactoryGirl.build(:identity).fingerprint }
   let(:collision)   { FactoryGirl.build(:colliding_identity).fingerprint }
+  let(:unconnected) { FactoryGirl.build(:unconnected_identity).fingerprint }
   let(:nonexistent) { FactoryGirl.build(:nonexistent_identity).fingerprint }
 
   it 'trusts the reference key' do
@@ -17,6 +18,9 @@ describe Trust do
     expect(Trust.call(collision).success?).to be_truthy
   end
 
+  it 'does not trust an unconnected key' do
+    expect(Trust.call(unconnected).success?).to be_falsey
+  end
 
   it 'does not trust a nonexistent key' do
     expect(Trust.call(nonexistent).success?).to be_falsey

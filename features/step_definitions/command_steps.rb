@@ -17,6 +17,12 @@ When 'I send a command with an invalid signature' do
   post "/#{ identity.slug }", command: command
 end
 
+When 'I send a command with an unconnected key' do
+  identity = FactoryGirl.build(:unconnected_identity)
+
+  post "/#{ identity.slug }", command: clearsign('enable', identity.fingerprint)
+end
+
 When %r{^I send the command '([^']*)'$} do |command|
   identity = FactoryGirl.build(:identity)
 

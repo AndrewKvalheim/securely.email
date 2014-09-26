@@ -6,7 +6,9 @@ class EnableIdentity
   include Service
 
   def call(slug, fingerprint)
-    fail RequestDenied, 'Untrusted key.' unless Trust.call(fingerprint)
+    unless Trust.call(fingerprint).success?
+      return Failure.new type: :forbidden, message: 'Untrusted key.'
+    end
 
     create_identity(slug, fingerprint)
   end
