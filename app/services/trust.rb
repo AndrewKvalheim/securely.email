@@ -1,4 +1,5 @@
 require 'service'
+require 'status'
 
 # Determines trust of an identity using the web of trust
 class Trust
@@ -8,8 +9,12 @@ class Trust
 
   include Service
 
-  def call(identity)
-    connected_to?(identity.fingerprint)
+  def call(fingerprint)
+    if connected_to?(fingerprint)
+      Success.new
+    else
+      Failure.new
+    end
   end
 
   private
