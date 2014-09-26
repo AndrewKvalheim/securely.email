@@ -17,6 +17,12 @@ class DisableIdentity
 
     fail unless identity.destroy
 
-    Success.new type: :ok, message: "Disabled alias: #{slug}"
+    message = if Invalidate.call(slug).success?
+                "Disabled alias: #{slug}"
+              else
+                "Disabled alias: #{slug} (May take several days to update.)"
+              end
+
+    Success.new type: :ok, message: message
   end
 end

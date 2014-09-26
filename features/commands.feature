@@ -43,3 +43,14 @@ Feature: Command interface
     Given the alias 'TestAlias' is enabled by someone else
     When I send the command 'disable' to 'TestAlias'
     Then I should receive 'Permission denied.'
+
+  Scenario: Invalidation fails while enabling an alias
+    Given CloudFlare is failing
+    When I send the command 'enable' to 'TestAlias'
+    Then I should receive 'Enabled alias: TestAlias (May take several days to update.)'
+
+  Scenario: Disable an alias
+    Given the alias 'TestAlias' is enabled
+    And CloudFlare is failing
+    When I send the command 'disable' to 'TestAlias'
+    Then I should receive 'Disabled alias: TestAlias (May take several days to update.)'

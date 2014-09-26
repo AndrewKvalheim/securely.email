@@ -88,3 +88,6 @@ gem 'pry', group: [:development]
 # Use the Compass framework to author stylesheets
 gem 'compass-rails'
 gem 'compass-flexbox'
+
+# CloudFlare API
+gem 'cloudflare', '~> 2.0.2'

@@ -17,7 +17,13 @@ class EnableIdentity
     identity = Identity.new(slug: slug, fingerprint: fingerprint)
 
     if identity.save
-      Success.new type: :created, message: "Enabled alias: #{slug}"
+      message = if Invalidate.call(slug).success?
+                  "Enabled alias: #{slug}"
+                else
+                  "Enabled alias: #{slug} (May take several days to update.)"
+                end
+
+      Success.new type: :created, message: message
     else
       # FIXME: Use original messages.
       taken = 'has already been taken'
