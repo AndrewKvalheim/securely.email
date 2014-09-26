@@ -7,18 +7,18 @@ describe Trust do
   let(:reference)   { 'B80C4E1E6F5544B277518173535B253E3B5AB9C6' }
 
   it 'detects connection to a connected key' do
-    Trust.call(connected).success? { should be_truthy }
+    expect(Trust.call(connected).success?).to be_truthy
   end
 
   it 'detects connection to a key that has a collision' do
-    Trust.call(collision).success? { should be_truthy }
+    expect(Trust.call(collision).success?).to be_truthy
   end
 
   it 'detects connection to itself' do
-    Trust.call(reference).success? { should be_truthy }
+    expect(Trust.call(reference).success?).to be_truthy
   end
 
   it 'does not detect connection to a nonexistent key' do
-    Trust.call(nonexistent).success? { should be_falsey }
+    expect(Trust.call(nonexistent).success?).to be_falsey
   end
 end

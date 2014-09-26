@@ -21,7 +21,7 @@ describe Identity do
     it { should ensure_length_of(:fingerprint).is_equal_to(40) }
 
     context 'with a typical key' do
-      subject(:identity) { FactoryGirl.build(:identity) }
+      subject { FactoryGirl.build(:identity) }
 
       it { should be_valid }
       its(:'key.name')        { should eq('Example') }
@@ -33,7 +33,7 @@ describe Identity do
     end
 
     context 'with a key that has an ID collision' do
-      subject(:identity) { FactoryGirl.build(:identity_with_id_collision) }
+      subject { FactoryGirl.build(:identity_with_id_collision) }
 
       it { should be_valid }
       its(:'key.name')        { should eq('Asheesh Laroia') }
@@ -45,7 +45,7 @@ describe Identity do
     end
 
     context 'with a nonexistent key' do
-      subject(:identity) { FactoryGirl.build(:nonexistent_identity) }
+      subject { FactoryGirl.build(:nonexistent_identity) }
 
       it { should_not be_valid }
     end
