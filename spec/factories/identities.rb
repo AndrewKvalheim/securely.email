@@ -9,6 +9,10 @@ FactoryGirl.define do
       fingerprint 'D00436A90C4BD12002020A3C37E1C17570096AD1'
     end
 
+    factory :unconnected_identity do
+      fingerprint '3A87FE0943A39B1C196471AEA25BB96F66778BBD'
+    end
+
     factory :nonexistent_identity do
       fingerprint 'A4E2B0C325633D2120BEC0C6CD9E545436171BC6'
     end
