@@ -10,6 +10,10 @@ class EnableIdentity
       return Failure.new type: :forbidden, message: 'Untrusted key.'
     end
 
+    if RESERVED_SLUGS.include?(slug)
+      return Failure.new type: :forbidden, message: 'Reserved alias.'
+    end
+
     create_identity(slug, fingerprint)
   end
 

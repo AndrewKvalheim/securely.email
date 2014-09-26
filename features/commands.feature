@@ -24,6 +24,10 @@ Feature: Command interface
     When I send the command 'enable' to 'TestAlias'
     Then I should receive 'Enabled alias: TestAlias'
 
+  Scenario: Cannot enable a reserved alias
+    When I send the command 'enable' to 'me'
+    Then I should receive 'Reserved alias.'
+
   Scenario: Cannot enable an alias that is already enabled
     Given the alias 'TestAlias' is enabled
     When I send the command 'enable' to 'TestAlias'
