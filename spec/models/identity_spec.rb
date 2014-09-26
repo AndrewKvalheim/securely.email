@@ -33,7 +33,7 @@ describe Identity do
     end
 
     context 'with a key that has an ID collision' do
-      subject { FactoryGirl.build(:identity_with_id_collision) }
+      subject { FactoryGirl.build(:colliding_identity) }
 
       it { should be_valid }
       its(:'key.name')        { should eq('Asheesh Laroia') }

@@ -5,7 +5,7 @@ FactoryGirl.define do
     slug 'Example'
     fingerprint '81A46DCA7018FABFC72BB787253A0338239BC6E9'
 
-    factory :identity_with_id_collision, aliases: [:other_identity] do
+    factory :colliding_identity, aliases: [:other_identity] do
       fingerprint 'D00436A90C4BD12002020A3C37E1C17570096AD1'
     end
 

@@ -4,7 +4,6 @@ require 'status'
 # Determines trust of an identity using the web of trust
 class Trust
   EXAMPLE   = '81A46DCA7018FABFC72BB787253A0338239BC6E9'
-  REFERENCE = 'B80C4E1E6F5544B277518173535B253E3B5AB9C6'
   WOTSAP = Rails.root.join('wotsap').to_s
 
   include Service
