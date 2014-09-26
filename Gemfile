@@ -69,6 +69,9 @@ gem 'factory_girl_rails', group: [:development, :test]
 gem 'cucumber-rails', require: false, group: :test
 gem 'database_cleaner', group: :test
 
+# HTTP mocks
+gem 'webmock', '~> 1.18.0', group: [:development, :test]
+
 # Automated testing
 gem 'spring', group: :development
 gem 'spring-commands-rspec', group: :development
