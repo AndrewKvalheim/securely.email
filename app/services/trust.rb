@@ -3,7 +3,6 @@ require 'status'
 
 # Determines trust of an identity using the web of trust
 class Trust
-  EXAMPLE   = '81A46DCA7018FABFC72BB787253A0338239BC6E9'
   WOTSAP = Rails.root.join('wotsap').to_s
 
   include Service
@@ -19,9 +18,6 @@ class Trust
   private
 
   def connected_to?(fingerprint)
-    # FIXME: Mock
-    return true if Rails.env.test? && fingerprint == EXAMPLE
-
     Rails.cache.fetch("/wot/#{ fingerprint }", expires_in: 1.day) do
       from = REFERENCE[-8..-1]
       to   = fingerprint[-8..-1]
